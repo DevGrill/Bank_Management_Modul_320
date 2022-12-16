@@ -1,2 +1,2 @@
-##Java Snake Game
+## Java Snake Game
 Developed by Nando and Cyril
