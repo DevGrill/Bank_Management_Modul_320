@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.devgrill</groupId>
-    <artifactId>Snake_Game</artifactId>
+    <artifactId>Bank_Management</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
