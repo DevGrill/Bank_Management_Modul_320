@@ -21,12 +21,14 @@ public class UserHandler {
         sendUserCommands();
     }
 
+    //Asks user for his Name to use.
     private static void askForName() {
         Scanner input = new Scanner(System.in);
         System.out.println("Wie heist du?");
         userName = input.next();
     }
 
+    //Sends available commands to User.
     private static void sendUserCommands() {
         System.out.println("Schreibe 'balance' um dein Guthaben anzuzeigen.");
         System.out.println("Schreibe 'addMoney {Amount}' um dein Guthaben anzuzeigen.");
@@ -35,6 +37,7 @@ public class UserHandler {
         handleUserInputs();
     }
 
+    //Handles Command with Arguments from the User.
     private static void handleUserInputs() {
         Scanner input = new Scanner(System.in);
         AccountManager accountManager = new AccountManager(userName);
@@ -42,18 +45,21 @@ public class UserHandler {
         String command = input.nextLine();
         String args[] = command.split(" ", 2);
         switch (args[0]) {
+            //Gets Balance.
             case "balance":
                 String bal = accountManager.getBalance();
                 System.out.println("Dein Guthaben betraegt: " + bal + "\n");
                 break;
 
+            //Deletes user Account.
             case "deleteAccount":
-                    bankManager.removeAccount(userName);
-                    System.out.println("Dein Account wurde erfolgreich entfernt. \n");
-                    UserHandler userHandler = new UserHandler();
-                    userHandler.startUserSession();
+                bankManager.removeAccount(userName);
+                System.out.println("Dein Account wurde erfolgreich entfernt. \n");
+                UserHandler userHandler = new UserHandler();
+                userHandler.startUserSession();
                 break;
 
+            //checks Arguments and calls addMoney function.
             case "addMoney":
                 if (args.length == 2) {
                     try {
@@ -68,6 +74,7 @@ public class UserHandler {
                 }
                 break;
 
+            //checks Arguments and calls removeMoney function.
             case "removeMoney":
                 if (args.length == 2) {
                     try {
@@ -87,9 +94,11 @@ public class UserHandler {
                 invalidInput();
                 break;
         }
+        //Restarts Function for user to send next Command.
         sendUserCommands();
     }
 
+    //Responds with an Error for input. Class exists to prevent redundancy.
     private static void invalidInput() {
         System.out.println("Ungueltige Eingabe\n");
     }
