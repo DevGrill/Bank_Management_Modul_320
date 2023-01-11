@@ -5,18 +5,18 @@ import java.io.FileWriter;
 import java.util.Properties;
 
 public class AccountManager {
-    String accountId;
+    String userName;
     Properties p = new Properties();
 
-    public AccountManager(String accountIdProvided){
-        accountId = accountIdProvided;
+    public AccountManager(String userNameProvided){
+        userName = userNameProvided;
     }
 
     public String getBalance(){
         Properties p = new Properties();
         try {
             p.load(new FileReader("BankStorage.data"));
-            return p.getProperty("1");
+            return p.getProperty(userName);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,7 +28,7 @@ public class AccountManager {
 
         try {
             p.load(new FileReader("BankStorage.data"));
-            p.setProperty(accountId, Integer.toString(newMoney));
+            p.setProperty(userName, Integer.toString(newMoney));
             p.store(new FileWriter("BankStorage.data"), "");
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,7 +40,7 @@ public class AccountManager {
 
         try {
             p.load(new FileReader("BankStorage.data"));
-            p.setProperty(accountId, Integer.toString(newMoney));
+            p.setProperty(userName, Integer.toString(newMoney));
             p.store(new FileWriter("BankStorage.data"), "");
         } catch (Exception e) {
             e.printStackTrace();
