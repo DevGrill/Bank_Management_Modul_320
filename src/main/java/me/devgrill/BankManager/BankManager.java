@@ -7,6 +7,7 @@ import java.util.Properties;
 public class BankManager {
     Properties p = new Properties();
 
+    //adds Account to the Storage File.
     public void addAccount(String name) {
         p.setProperty(name, "10000");
         try {
@@ -16,6 +17,7 @@ public class BankManager {
         }
     }
 
+    //Checks if Account with userName already exists
     public boolean checkAccount(String name) {
         try {
             p.load(new FileReader("BankStorage.data"));
@@ -27,6 +29,7 @@ public class BankManager {
         }
     }
 
+    //Removes an Account from the storage File.
     public void removeAccount(String name) {
         try {
             p.load(new FileReader("BankStorage.data"));

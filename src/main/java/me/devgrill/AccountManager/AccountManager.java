@@ -8,10 +8,12 @@ public class AccountManager {
     String userName;
     Properties p = new Properties();
 
+    //Stores Username for other Functions
     public AccountManager(String userNameProvided){
         userName = userNameProvided;
     }
 
+    //Returns balance from userNames Account
     public String getBalance(){
         try {
             p.load(new FileReader("BankStorage.data"));
@@ -22,6 +24,7 @@ public class AccountManager {
         return "null";
     }
 
+    //Adds Money to the userNames account.
     public void addMoney(Integer moneyToAdd){
         int newMoney = (Integer.parseInt(getBalance()) + moneyToAdd);
 
@@ -33,6 +36,7 @@ public class AccountManager {
         }
     }
 
+    //Removes Money to userNames account.
     public void removeMoney(Integer moneyToRemove){
         int newMoney = (Integer.parseInt(getBalance()) - moneyToRemove);
 
