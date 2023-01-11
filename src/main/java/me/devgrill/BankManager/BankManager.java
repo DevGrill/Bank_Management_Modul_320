@@ -5,8 +5,9 @@ import java.io.FileWriter;
 import java.util.Properties;
 
 public class BankManager {
+    Properties p = new Properties();
+
     public void addAccount(String name) {
-        Properties p = new Properties();
         p.setProperty(name, "10000");
         try {
             p.store(new FileWriter("BankStorage.data"), "");
@@ -16,7 +17,6 @@ public class BankManager {
     }
 
     public boolean checkAccount(String name) {
-        Properties p = new Properties();
         try {
             p.load(new FileReader("BankStorage.data"));
             String value = p.getProperty(name);
@@ -28,7 +28,12 @@ public class BankManager {
     }
 
     public void removeAccount(String name) {
-        Properties p = new Properties();
-        p.remove(name);
+        try {
+            p.load(new FileReader("BankStorage.data"));
+            p.remove(name);
+            p.store(new FileWriter("BankStorage.data"), "");
+        }catch (Exception e){
+            System.out.println("Es ist ein Fehler aufgetreten. Bitte versuchen sie es Spaeter erneut. \n");
+        }
     }
 }

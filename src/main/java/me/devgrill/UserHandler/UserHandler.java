@@ -13,10 +13,9 @@ public class UserHandler {
     public void startUserSession() {
         askForName();
         boolean accountExits = bankManager.checkAccount(userName);
-        System.out.println(accountExits);
         if (!accountExits) {
             bankManager.addAccount(userName);
-            System.out.println("Dein Account auf den Namen " + userName + " wurde erfolgreich angelegt.");
+            System.out.println("Dein Account auf den Namen " + userName + " wurde erfolgreich angelegt. \n");
         }
         sendUserCommands();
     }
@@ -31,6 +30,7 @@ public class UserHandler {
         System.out.println("Schreibe 'balance' um dein Guthaben anzuzeigen.");
         System.out.println("Schreibe 'addMoney {Amount}' um dein Guthaben anzuzeigen.");
         System.out.println("Schreibe 'removeMoney {Amount}' um dein Guthaben anzuzeigen.");
+        System.out.println("Schreibe 'deleteAccount' um deinen Account zu löschen.");
         handleUserInputs();
     }
 
@@ -43,12 +43,14 @@ public class UserHandler {
         switch (args[0]) {
             case "balance":
                 String bal = accountManager.getBalance();
-                System.out.println("Dein Guthaben betraegt: " + bal);
+                System.out.println("Dein Guthaben betraegt: " + bal + "\n");
                 break;
 
             case "deleteAccount":
                     bankManager.removeAccount(userName);
-                    System.out.println("Dein Account wurde erfolgreich entfernt.");
+                    System.out.println("Dein Account wurde erfolgreich entfernt. \n");
+                    UserHandler userHandler = new UserHandler();
+                    userHandler.startUserSession();
                 break;
 
             case "addMoney":
@@ -56,6 +58,7 @@ public class UserHandler {
                     try {
                         int amountToAdd = Integer.parseInt(args[1]);
                         accountManager.addMoney(amountToAdd);
+                        System.out.println("Geld wurde hinzugefuegt. \n");
                     } catch (Exception e) {
                         invalidInput();
                     }
@@ -69,6 +72,7 @@ public class UserHandler {
                     try {
                         int amountToRemove = Integer.parseInt(args[1]);
                         accountManager.removeMoney(amountToRemove);
+                        System.out.println("Geld wurde entfernt. \n");
                     } catch (Exception e) {
                         invalidInput();
                     }
