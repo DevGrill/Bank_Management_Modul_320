@@ -15,13 +15,13 @@ class AccountManagerTest {
     void addMoney() {
         AccountManager accountManager = new AccountManager("Test");
         Assertions.assertDoesNotThrow(() -> accountManager.addMoney(10000));
-        Assertions.assertThrows(Exception.class, () -> accountManager.addMoney(Integer.parseInt("Hallo")));
+        Assertions.assertThrows(Exception.class, () -> accountManager.addMoney(Integer.parseInt("Test")));
     }
 
     @Test
     void removeMoney() {
         AccountManager accountManager = new AccountManager("Test");
         Assertions.assertDoesNotThrow(() -> accountManager.removeMoney(10000));
-        Assertions.assertThrows(Exception.class, () -> accountManager.removeMoney(Integer.parseInt("Hallo")));
+        Assertions.assertThrows(Exception.class, () -> accountManager.removeMoney(Integer.parseInt("Test")));
     }
 }
