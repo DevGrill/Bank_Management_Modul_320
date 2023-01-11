@@ -10,6 +10,7 @@ public class UserHandler {
 
     static String userName;
 
+    //This starts a new Session with a userName
     public void startUserSession() {
         askForName();
         boolean accountExits = bankManager.checkAccount(userName);

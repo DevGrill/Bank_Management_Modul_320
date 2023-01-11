@@ -13,7 +13,6 @@ public class AccountManager {
     }
 
     public String getBalance(){
-        Properties p = new Properties();
         try {
             p.load(new FileReader("BankStorage.data"));
             return p.getProperty(userName);
@@ -27,7 +26,6 @@ public class AccountManager {
         int newMoney = (Integer.parseInt(getBalance()) + moneyToAdd);
 
         try {
-            p.load(new FileReader("BankStorage.data"));
             p.setProperty(userName, Integer.toString(newMoney));
             p.store(new FileWriter("BankStorage.data"), "");
         } catch (Exception e) {
@@ -39,7 +37,6 @@ public class AccountManager {
         int newMoney = (Integer.parseInt(getBalance()) - moneyToRemove);
 
         try {
-            p.load(new FileReader("BankStorage.data"));
             p.setProperty(userName, Integer.toString(newMoney));
             p.store(new FileWriter("BankStorage.data"), "");
         } catch (Exception e) {
