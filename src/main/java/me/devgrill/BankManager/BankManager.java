@@ -17,7 +17,9 @@ public class BankManager {
         p.setProperty("blocked", "false");
         p.setProperty("balance", "10000");
         try {
-            p.store(new FileWriter(name + ".data"), "");
+            FileWriter fileWriter = new FileWriter(name + ".data");
+            p.store(fileWriter, "");
+            fileWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -26,8 +28,10 @@ public class BankManager {
     //Checks if Account with userName already exists
     public boolean checkAccount(String name) {
         try {
-            p.load(new FileReader(name + ".data"));
+            FileReader fileReader = new FileReader(name + ".data");
+            p.load(fileReader);
             String value = p.getProperty("IBAN");
+            fileReader.close();
             return value != null;
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,12 +40,17 @@ public class BankManager {
     }
 
     //Removes an Account from the storage File.
-    public void removeAccount(String name) {
+    public boolean removeAccount(String name) {
         try {
             File f = new File(name + ".data");
-            f.delete();
+            if(f.delete()){
+                return true;
+            }else{
+                return false;
+            }
         }catch (Exception e){
             System.out.println("Es ist ein Fehler aufgetreten. Bitte versuchen sie es Spaeter erneut. \n");
+            return false;
         }
     }
 }

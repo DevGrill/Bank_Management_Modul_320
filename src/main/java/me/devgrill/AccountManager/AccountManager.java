@@ -1,7 +1,5 @@
 package me.devgrill.AccountManager;
 
-import me.devgrill.BankManager.BankManager;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.time.LocalDate;
@@ -20,11 +18,13 @@ public class AccountManager {
     public AccountManager(String userNameProvided){
         userName = userNameProvided;
         try {
-            p.load(new FileReader(userName + ".data"));
+            FileReader fileReader = new FileReader(userName + ".data");
+            p.load(fileReader);
             IBANNumber = p.getProperty("IBAN");
             balance = p.getProperty("balance");
             creationDate = LocalDate.parse(p.getProperty("creationDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             blocked = Boolean.parseBoolean(p.getProperty("blocked"));
+            fileReader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,8 +60,10 @@ public class AccountManager {
         int newMoney = (Integer.parseInt(getBalance()) + moneyToAdd);
 
         try {
+            FileWriter fileWriter = new FileWriter(userName + ".data");
             p.setProperty("balance", Integer.toString(newMoney));
-            p.store(new FileWriter(userName + ".data"), "");
+            p.store(fileWriter, "");
+            fileWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,8 +73,10 @@ public class AccountManager {
     public void removeMoney(Integer moneyToRemove){
         int newMoney = (Integer.parseInt(getBalance()) - moneyToRemove);
         try {
+            FileWriter fileWriter = new FileWriter(userName + ".data");
             p.setProperty("balance", Integer.toString(newMoney));
-            p.store(new FileWriter(userName + ".data"), "");
+            p.store(fileWriter, "");
+            fileWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,8 +84,10 @@ public class AccountManager {
 
     public void setBlocked(boolean newBlockedStatus){
         try {
+            FileWriter fileWriter = new FileWriter(userName + ".data");
             p.setProperty("blocked", Boolean.toString(newBlockedStatus));
-            p.store(new FileWriter(userName + ".data"), "");
+            p.store(fileWriter, "");
+            fileWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -33,7 +33,7 @@ public class UserHandler {
         System.out.println("Schreibe 'info' um Infos ueber deinen Account anzuzeigen.");
         System.out.println("Schreibe 'addMoney {Amount}' um dein Guthaben anzuzeigen.");
         System.out.println("Schreibe 'removeMoney {Amount}' um dein Guthaben anzuzeigen.");
-        System.out.println("Schreibe 'deleteAccount' um deinen Account zu löschen.");
+        System.out.println("Schreibe 'deleteAccount' um deinen Account zu loeschen.");
         System.out.println("Schreibe 'blockAccount' um deinen Account zu blockieren.");
         System.out.println("Schreibe 'unblockAccount' um deinen Account freizuschalten.");
         handleUserInputs();
@@ -58,8 +58,12 @@ public class UserHandler {
 
             //Deletes user Account.
             case "deleteAccount":
-                bankManager.removeAccount(userName);
-                System.out.println("Dein Account wurde erfolgreich entfernt. \n");
+                Boolean result = bankManager.removeAccount(userName);
+                if(result){
+                    System.out.println("Dein Account wurde erfolgreich entfernt. \n");
+                }else{
+                    System.out.println("Dein Account konnte nicht entfernt werden. \n");
+                }
                 UserHandler userHandler = new UserHandler();
                 userHandler.startUserSession();
                 break;
