@@ -8,7 +8,7 @@ class AccountManagerTest {
     @Test
     void getBalance() {
         AccountManager accountManager = new AccountManager("Test");
-        Assertions.assertNotNull(accountManager.getBalance());
+        Assertions.assertNotEquals("null", accountManager.getBalance());
     }
 
     @Test
