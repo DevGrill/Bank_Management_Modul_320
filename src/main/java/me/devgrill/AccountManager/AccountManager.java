@@ -1,21 +1,33 @@
 package me.devgrill.AccountManager;
 
+import me.devgrill.BankManager.BankManager;
+
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 public class AccountManager {
     String userName;
     String IBANNumber;
     String balance;
-    Date creationDate;
+    LocalDate creationDate;
     Boolean blocked;
     Properties p = new Properties();
 
     //Stores Username for other Functions
     public AccountManager(String userNameProvided){
         userName = userNameProvided;
+        try {
+            p.load(new FileReader(userName + ".data"));
+            IBANNumber = p.getProperty("IBAN");
+            balance = p.getProperty("balance");
+            creationDate = LocalDate.parse(p.getProperty("creationDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            blocked = Boolean.parseBoolean(p.getProperty("blocked"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Returns accounts IBAN number
@@ -30,17 +42,11 @@ public class AccountManager {
 
     //Returns balance from userNames Account
     public String getBalance(){
-        try {
-            p.load(new FileReader(userName + ".data"));
-            balance = p.getProperty(userName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return balance;
     }
 
     //Returns Account Creation Date
-    public Date getAccountCreation(){
+    public LocalDate getAccountCreation(){
         return creationDate;
     }
 
@@ -54,8 +60,8 @@ public class AccountManager {
         int newMoney = (Integer.parseInt(getBalance()) + moneyToAdd);
 
         try {
-            p.setProperty(userName, Integer.toString(newMoney));
-            p.store(new FileWriter("BankStorage.data"), "");
+            p.setProperty("balance", Integer.toString(newMoney));
+            p.store(new FileWriter(userName + ".data"), "");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,16 +70,20 @@ public class AccountManager {
     //Removes Money to userNames account.
     public void removeMoney(Integer moneyToRemove){
         int newMoney = (Integer.parseInt(getBalance()) - moneyToRemove);
-
         try {
-            p.setProperty(userName, Integer.toString(newMoney));
-            p.store(new FileWriter("BankStorage.data"), "");
+            p.setProperty("balance", Integer.toString(newMoney));
+            p.store(new FileWriter(userName + ".data"), "");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setBlocked(boolean newBlockedStatus){
-        blocked = newBlockedStatus;
+        try {
+            p.setProperty("blocked", Boolean.toString(newBlockedStatus));
+            p.store(new FileWriter(userName + ".data"), "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

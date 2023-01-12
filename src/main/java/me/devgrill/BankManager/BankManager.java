@@ -3,8 +3,7 @@ package me.devgrill.BankManager;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -14,7 +13,7 @@ public class BankManager {
     //adds Account to the Storage File.
     public void addAccount(String name) {
         p.setProperty("IBAN", UUID.randomUUID().toString());
-        p.setProperty("creationDate", LocalDateTime.now().toString());
+        p.setProperty("creationDate", LocalDate.now().toString());
         p.setProperty("blocked", "false");
         p.setProperty("balance", "10000");
         try {
@@ -39,7 +38,6 @@ public class BankManager {
     //Removes an Account from the storage File.
     public void removeAccount(String name) {
         try {
-
             File f = new File(name + ".data");
             f.delete();
         }catch (Exception e){

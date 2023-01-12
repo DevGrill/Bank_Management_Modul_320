@@ -30,10 +30,12 @@ public class UserHandler {
 
     //Sends available commands to User.
     private static void sendUserCommands() {
-        System.out.println("Schreibe 'balance' um dein Guthaben anzuzeigen.");
+        System.out.println("Schreibe 'info' um Infos ueber deinen Account anzuzeigen.");
         System.out.println("Schreibe 'addMoney {Amount}' um dein Guthaben anzuzeigen.");
         System.out.println("Schreibe 'removeMoney {Amount}' um dein Guthaben anzuzeigen.");
         System.out.println("Schreibe 'deleteAccount' um deinen Account zu löschen.");
+        System.out.println("Schreibe 'blockAccount' um deinen Account zu blockieren.");
+        System.out.println("Schreibe 'unblockAccount' um deinen Account freizuschalten.");
         handleUserInputs();
     }
 
@@ -46,9 +48,12 @@ public class UserHandler {
         String args[] = command.split(" ", 2);
         switch (args[0]) {
             //Gets Balance.
-            case "balance":
-                String bal = accountManager.getBalance();
-                System.out.println("Dein Guthaben betraegt: " + bal + "\n");
+            case "info":
+                System.out.println("Guten tag " + accountManager.getOwner());
+                System.out.println("Deine IBAN Nummer ist: " + accountManager.getIBAN());
+                System.out.println("Dein Account sperr Status ist: " + accountManager.isAccountBlocked());
+                System.out.println("Dein Account wurde an folgendem Datum erstellt: " + accountManager.getAccountCreation());
+                System.out.println("Dein Guthaben betraegt: " + accountManager.getBalance() + "\n");
                 break;
 
             //Deletes user Account.
@@ -61,7 +66,7 @@ public class UserHandler {
 
             //checks Arguments and calls addMoney function.
             case "addMoney":
-                if (args.length == 2) {
+                if (args.length == 2 && !accountManager.isAccountBlocked()) {
                     try {
                         int amountToAdd = Integer.parseInt(args[1]);
                         accountManager.addMoney(amountToAdd);
@@ -76,7 +81,7 @@ public class UserHandler {
 
             //checks Arguments and calls removeMoney function.
             case "removeMoney":
-                if (args.length == 2) {
+                if (args.length == 2 && !accountManager.isAccountBlocked()) {
                     try {
                         int amountToRemove = Integer.parseInt(args[1]);
                         accountManager.removeMoney(amountToRemove);
@@ -88,6 +93,16 @@ public class UserHandler {
                 } else {
                     invalidInput();
                 }
+                break;
+
+            case "blockAccount":
+                accountManager.setBlocked(true);
+                System.out.println("Dein Account wurde blockiert.");
+                break;
+
+            case "unblockAccount":
+                accountManager.setBlocked(false);
+                System.out.println("Dein Account wurde freigeschalten.");
                 break;
 
             default:
