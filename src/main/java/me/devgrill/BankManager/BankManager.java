@@ -34,7 +34,6 @@ public class BankManager {
             fileReader.close();
             return value != null;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }

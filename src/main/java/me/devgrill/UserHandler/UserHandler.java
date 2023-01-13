@@ -79,7 +79,7 @@ public class UserHandler {
                         invalidInput();
                     }
                 } else {
-                    invalidInput();
+                    System.out.println("Ihr Account ist derzeit gesperrt.");
                 }
                 break;
 
@@ -95,7 +95,7 @@ public class UserHandler {
                     }
 
                 } else {
-                    invalidInput();
+                    System.out.println("Ihr Account ist derzeit gesperrt.");
                 }
                 break;
 
