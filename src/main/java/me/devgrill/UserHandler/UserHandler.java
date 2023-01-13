@@ -59,9 +59,9 @@ public class UserHandler {
             //Deletes user Account.
             case "deleteAccount":
                 Boolean result = bankManager.removeAccount(userName);
-                if(result){
+                if (result) {
                     System.out.println("Dein Account wurde erfolgreich entfernt. \n");
-                }else{
+                } else {
                     System.out.println("Dein Account konnte nicht entfernt werden. \n");
                 }
                 UserHandler userHandler = new UserHandler();
@@ -70,32 +70,40 @@ public class UserHandler {
 
             //checks Arguments and calls addMoney function.
             case "addMoney":
-                if (args.length == 2 && !accountManager.isAccountBlocked()) {
-                    try {
-                        int amountToAdd = Integer.parseInt(args[1]);
-                        accountManager.addMoney(amountToAdd);
-                        System.out.println("Geld wurde hinzugefuegt. \n");
-                    } catch (Exception e) {
-                        invalidInput();
+                if (args.length == 2) {
+                    if (!accountManager.isAccountBlocked()) {
+                        try {
+                            int amountToAdd = Integer.parseInt(args[1]);
+                            accountManager.addMoney(amountToAdd);
+                            System.out.println("Geld wurde hinzugefuegt. \n");
+                        } catch (Exception e) {
+                            invalidInput();
+                        }
+                    } else {
+                        System.out.println("Ihr Account ist derzeit gesperrt.");
                     }
                 } else {
-                    System.out.println("Ihr Account ist derzeit gesperrt.");
+                    invalidInput();
                 }
                 break;
 
             //checks Arguments and calls removeMoney function.
             case "removeMoney":
-                if (args.length == 2 && !accountManager.isAccountBlocked()) {
-                    try {
-                        int amountToRemove = Integer.parseInt(args[1]);
-                        accountManager.removeMoney(amountToRemove);
-                        System.out.println("Geld wurde entfernt. \n");
-                    } catch (Exception e) {
-                        invalidInput();
+                if (args.length == 2) {
+                    if (!accountManager.isAccountBlocked()) {
+                        try {
+                            int amountToRemove = Integer.parseInt(args[1]);
+                            accountManager.removeMoney(amountToRemove);
+                            System.out.println("Geld wurde entfernt. \n");
+                        } catch (Exception e) {
+                            invalidInput();
+                        }
+                    } else {
+                        System.out.println("Ihr Account ist derzeit gesperrt.");
                     }
 
                 } else {
-                    System.out.println("Ihr Account ist derzeit gesperrt.");
+                    invalidInput();
                 }
                 break;
 
