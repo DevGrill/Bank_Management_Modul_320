@@ -52,7 +52,7 @@ public class UserHandler {
                 System.out.println("Guten tag " + accountManager.getOwner());
                 System.out.println("Deine IBAN Nummer ist: " + accountManager.getIBAN());
                 System.out.println("Dein Account sperr Status ist: " + accountManager.isAccountBlocked());
-                System.out.println("Dein Account wurde an folgendem Datum erstellt: " + accountManager.getAccountCreation());
+                System.out.println("Dein Account wurde an folgendem Datum erstellt: " + accountManager.getAccountCreationDate());
                 System.out.println("Dein Guthaben betraegt: " + accountManager.getBalance() + "\n");
                 break;
 

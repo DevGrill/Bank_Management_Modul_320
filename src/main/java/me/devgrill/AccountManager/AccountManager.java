@@ -46,7 +46,7 @@ public class AccountManager {
     }
 
     //Returns Account Creation Date
-    public LocalDate getAccountCreation(){
+    public LocalDate getAccountCreationDate(){
         return creationDate;
     }
 
@@ -58,7 +58,7 @@ public class AccountManager {
     //Adds Money to the userNames account.
     public void addMoney(Integer moneyToAdd){
         int newMoney = (Integer.parseInt(getBalance()) + moneyToAdd);
-
+        balance = Integer.toString(newMoney);
         try {
             FileWriter fileWriter = new FileWriter(userName + ".data");
             p.setProperty("balance", Integer.toString(newMoney));
@@ -72,6 +72,7 @@ public class AccountManager {
     //Removes Money to userNames account.
     public void removeMoney(Integer moneyToRemove){
         int newMoney = (Integer.parseInt(getBalance()) - moneyToRemove);
+        balance = Integer.toString(newMoney);
         try {
             FileWriter fileWriter = new FileWriter(userName + ".data");
             p.setProperty("balance", Integer.toString(newMoney));
@@ -88,6 +89,7 @@ public class AccountManager {
             p.setProperty("blocked", Boolean.toString(newBlockedStatus));
             p.store(fileWriter, "");
             fileWriter.close();
+            blocked = newBlockedStatus;
         } catch (Exception e) {
             e.printStackTrace();
         }
