@@ -9,6 +9,7 @@ class BankManagerTest {
     void addAccount() {
         BankManager bankManager = new BankManager();
         Assertions.assertDoesNotThrow(() -> bankManager.addAccount("Test"));
+        Assertions.assertTrue(bankManager.checkAccount("Test"));
         bankManager.removeAccount("Test");
     }
 
@@ -26,5 +27,6 @@ class BankManagerTest {
         BankManager bankManager = new BankManager();
         bankManager.addAccount("Test");
         Assertions.assertDoesNotThrow(() -> bankManager.removeAccount("Test"));
+        Assertions.assertFalse(bankManager.checkAccount("Test"));
     }
 }
