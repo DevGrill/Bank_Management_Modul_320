@@ -75,7 +75,6 @@ public class UserHandler {
                     try {
                         int amountToAdd = Integer.parseInt(args[1]);
                         accountManager.addMoney(amountToAdd);
-                        System.out.println("Geld wurde hinzugefuegt. \n");
                     } catch (Exception e) {
                         invalidInput();
                     }
@@ -90,7 +89,6 @@ public class UserHandler {
                     try {
                         int amountToRemove = Integer.parseInt(args[1]);
                         accountManager.removeMoney(amountToRemove);
-                        System.out.println("Geld wurde entfernt. \n");
                     } catch (Exception e) {
                         invalidInput();
                     }

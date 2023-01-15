@@ -58,21 +58,24 @@ public class AccountManager {
     //Adds Money to the userNames account.
     public void addMoney(Integer moneyToAdd) {
         if (isAccountBlocked()) {
-            System.out.println("Dein Account wurde Blockiert.");
+            System.out.println("Dein Account ist blockiert. Transaktion abgebrochen!");
         } else {
             int newMoney = (Integer.parseInt(getBalance()) + moneyToAdd);
             balance = Integer.toString(newMoney);
+            saveFile();
+            System.out.println("Geld wurde hinzugefuegt. \n");
         }
     }
 
     //Removes Money to userNames account.
     public void removeMoney(Integer moneyToRemove) {
         if (isAccountBlocked()) {
-            System.out.println("Dein Account wurde Blockiert.");
+            System.out.println("Dein Account ist blockiert. Transaktion abgebrochen!");
         } else {
             int newMoney = (Integer.parseInt(getBalance()) - moneyToRemove);
             balance = Integer.toString(newMoney);
             saveFile();
+            System.out.println("Geld wurde entfernt. \n");
         }
     }
 
@@ -87,6 +90,7 @@ public class AccountManager {
             FileWriter fileWriter = new FileWriter(userName + ".data");
             p.setProperty("balance", balance);
             p.setProperty("blocked", Boolean.toString(blocked));
+            System.out.println(p);
             p.store(fileWriter, "");
             fileWriter.close();
         } catch (Exception e) {
