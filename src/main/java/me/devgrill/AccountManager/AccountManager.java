@@ -90,7 +90,6 @@ public class AccountManager {
             FileWriter fileWriter = new FileWriter(userName + ".data");
             p.setProperty("balance", balance);
             p.setProperty("blocked", Boolean.toString(blocked));
-            System.out.println(p);
             p.store(fileWriter, "");
             fileWriter.close();
         } catch (Exception e) {
