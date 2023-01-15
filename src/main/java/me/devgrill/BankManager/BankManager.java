@@ -8,16 +8,22 @@ import java.util.Properties;
 import java.util.UUID;
 
 public class BankManager {
+    String userName;
+
+    public BankManager(String name){
+        userName = name;
+    }
+
     Properties p = new Properties();
 
     //adds Account to the Storage File.
-    public void addAccount(String name) {
+    public void addAccount() {
         p.setProperty("IBAN", UUID.randomUUID().toString());
         p.setProperty("creationDate", LocalDate.now().toString());
         p.setProperty("blocked", "false");
         p.setProperty("balance", "10000");
         try {
-            FileWriter fileWriter = new FileWriter(name + ".data");
+            FileWriter fileWriter = new FileWriter(userName + ".data");
             p.store(fileWriter, "");
             fileWriter.close();
         } catch (Exception e) {
@@ -26,9 +32,9 @@ public class BankManager {
     }
 
     //Checks if Account with userName already exists
-    public boolean checkAccount(String name) {
+    public boolean checkAccount() {
         try {
-            FileReader fileReader = new FileReader(name + ".data");
+            FileReader fileReader = new FileReader(userName + ".data");
             p.load(fileReader);
             String value = p.getProperty("IBAN");
             fileReader.close();
@@ -39,9 +45,9 @@ public class BankManager {
     }
 
     //Removes an Account from the storage File.
-    public boolean removeAccount(String name) {
+    public boolean removeAccount() {
         try {
-            File f = new File(name + ".data");
+            File f = new File(userName + ".data");
             if(f.delete()){
                 return true;
             }else{

@@ -6,16 +6,16 @@ import me.devgrill.BankManager.BankManager;
 import java.util.Scanner;
 
 public class UserHandler {
-    static BankManager bankManager = new BankManager();
 
     static String userName;
 
     //This starts a new Session with a userName
     public void startUserSession() {
         askForName();
-        boolean accountExits = bankManager.checkAccount(userName);
+        BankManager bankManager = new BankManager(userName);
+        boolean accountExits = bankManager.checkAccount();
         if (!accountExits) {
-            bankManager.addAccount(userName);
+            bankManager.addAccount();
             System.out.println("Dein Account auf den Namen " + userName + " wurde erfolgreich angelegt. \n");
         }
         sendUserCommands();
@@ -41,6 +41,7 @@ public class UserHandler {
 
     //Handles Command with Arguments from the User.
     private static void handleUserInputs() {
+        BankManager bankManager = new BankManager(userName);
         Scanner input = new Scanner(System.in);
         AccountManager accountManager = new AccountManager(userName);
 
@@ -58,7 +59,7 @@ public class UserHandler {
 
             //Deletes user Account.
             case "deleteAccount":
-                Boolean result = bankManager.removeAccount(userName);
+                Boolean result = bankManager.removeAccount();
                 if (result) {
                     System.out.println("Dein Account wurde erfolgreich entfernt. \n");
                 } else {
@@ -71,16 +72,12 @@ public class UserHandler {
             //checks Arguments and calls addMoney function.
             case "addMoney":
                 if (args.length == 2) {
-                    if (!accountManager.isAccountBlocked()) {
-                        try {
-                            int amountToAdd = Integer.parseInt(args[1]);
-                            accountManager.addMoney(amountToAdd);
-                            System.out.println("Geld wurde hinzugefuegt. \n");
-                        } catch (Exception e) {
-                            invalidInput();
-                        }
-                    } else {
-                        System.out.println("Ihr Account ist derzeit gesperrt.");
+                    try {
+                        int amountToAdd = Integer.parseInt(args[1]);
+                        accountManager.addMoney(amountToAdd);
+                        System.out.println("Geld wurde hinzugefuegt. \n");
+                    } catch (Exception e) {
+                        invalidInput();
                     }
                 } else {
                     invalidInput();
@@ -90,16 +87,12 @@ public class UserHandler {
             //checks Arguments and calls removeMoney function.
             case "removeMoney":
                 if (args.length == 2) {
-                    if (!accountManager.isAccountBlocked()) {
-                        try {
-                            int amountToRemove = Integer.parseInt(args[1]);
-                            accountManager.removeMoney(amountToRemove);
-                            System.out.println("Geld wurde entfernt. \n");
-                        } catch (Exception e) {
-                            invalidInput();
-                        }
-                    } else {
-                        System.out.println("Ihr Account ist derzeit gesperrt.");
+                    try {
+                        int amountToRemove = Integer.parseInt(args[1]);
+                        accountManager.removeMoney(amountToRemove);
+                        System.out.println("Geld wurde entfernt. \n");
+                    } catch (Exception e) {
+                        invalidInput();
                     }
 
                 } else {

@@ -7,26 +7,26 @@ class BankManagerTest {
 
     @Test()
     void addAccount() {
-        BankManager bankManager = new BankManager();
-        Assertions.assertDoesNotThrow(() -> bankManager.addAccount("Test"));
-        Assertions.assertTrue(bankManager.checkAccount("Test"));
-        bankManager.removeAccount("Test");
+        BankManager bankManager = new BankManager("Test");
+        Assertions.assertDoesNotThrow(bankManager::addAccount);
+        Assertions.assertTrue(bankManager.checkAccount());
+        bankManager.removeAccount();
     }
 
     @Test
     void checkAccount() {
-        BankManager bankManager = new BankManager();
-        bankManager.addAccount("Test");
-        Assertions.assertTrue(bankManager.checkAccount("Test"));
-        bankManager.removeAccount("Test");
-        Assertions.assertFalse(bankManager.checkAccount("Test"));
+        BankManager bankManager = new BankManager("Test");
+        bankManager.addAccount();
+        Assertions.assertTrue(bankManager.checkAccount());
+        bankManager.removeAccount();
+        Assertions.assertFalse(bankManager.checkAccount());
     }
 
     @Test
     void removeAccount() {
-        BankManager bankManager = new BankManager();
-        bankManager.addAccount("Test");
-        Assertions.assertDoesNotThrow(() -> bankManager.removeAccount("Test"));
-        Assertions.assertFalse(bankManager.checkAccount("Test"));
+        BankManager bankManager = new BankManager("Test");
+        bankManager.addAccount();
+        Assertions.assertDoesNotThrow(bankManager::removeAccount);
+        Assertions.assertFalse(bankManager.checkAccount());
     }
 }

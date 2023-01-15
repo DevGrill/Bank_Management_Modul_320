@@ -15,7 +15,7 @@ public class AccountManager {
     Properties p = new Properties();
 
     //Stores Username for other Functions
-    public AccountManager(String userNameProvided){
+    public AccountManager(String userNameProvided) {
         userName = userNameProvided;
         try {
             FileReader fileReader = new FileReader(userName + ".data");
@@ -31,65 +31,64 @@ public class AccountManager {
     }
 
     //Returns accounts IBAN number
-    public String getIBAN(){
+    public String getIBAN() {
         return IBANNumber;
     }
 
     //returns Owners userName
-    public String getOwner(){
+    public String getOwner() {
         return userName;
     }
 
     //Returns balance from userNames Account
-    public String getBalance(){
+    public String getBalance() {
         return balance;
     }
 
     //Returns Account Creation Date
-    public LocalDate getAccountCreationDate(){
+    public LocalDate getAccountCreationDate() {
         return creationDate;
     }
 
     //returns Boolean if account is blocked or not
-    public boolean isAccountBlocked(){
+    public boolean isAccountBlocked() {
         return blocked;
     }
 
     //Adds Money to the userNames account.
-    public void addMoney(Integer moneyToAdd){
-        int newMoney = (Integer.parseInt(getBalance()) + moneyToAdd);
-        balance = Integer.toString(newMoney);
-        try {
-            FileWriter fileWriter = new FileWriter(userName + ".data");
-            p.setProperty("balance", Integer.toString(newMoney));
-            p.store(fileWriter, "");
-            fileWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void addMoney(Integer moneyToAdd) {
+        if (isAccountBlocked()) {
+            System.out.println("Dein Account wurde Blockiert.");
+        } else {
+            int newMoney = (Integer.parseInt(getBalance()) + moneyToAdd);
+            balance = Integer.toString(newMoney);
         }
     }
 
     //Removes Money to userNames account.
-    public void removeMoney(Integer moneyToRemove){
-        int newMoney = (Integer.parseInt(getBalance()) - moneyToRemove);
-        balance = Integer.toString(newMoney);
-        try {
-            FileWriter fileWriter = new FileWriter(userName + ".data");
-            p.setProperty("balance", Integer.toString(newMoney));
-            p.store(fileWriter, "");
-            fileWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void removeMoney(Integer moneyToRemove) {
+        if (isAccountBlocked()) {
+            System.out.println("Dein Account wurde Blockiert.");
+        } else {
+            int newMoney = (Integer.parseInt(getBalance()) - moneyToRemove);
+            balance = Integer.toString(newMoney);
+            saveFile();
         }
     }
 
-    public void setBlocked(boolean newBlockedStatus){
+    public void setBlocked(boolean newBlockedStatus) {
+        blocked = newBlockedStatus;
+        saveFile();
+    }
+
+    //Saves properties in File
+    private void saveFile() {
         try {
             FileWriter fileWriter = new FileWriter(userName + ".data");
-            p.setProperty("blocked", Boolean.toString(newBlockedStatus));
+            p.setProperty("balance", balance);
+            p.setProperty("blocked", Boolean.toString(blocked));
             p.store(fileWriter, "");
             fileWriter.close();
-            blocked = newBlockedStatus;
         } catch (Exception e) {
             e.printStackTrace();
         }
