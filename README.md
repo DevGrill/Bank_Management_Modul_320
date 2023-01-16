@@ -1,2 +1,2 @@
-## Java Snake Game
+## Bank Manager
 Developed by Nando and Cyril
